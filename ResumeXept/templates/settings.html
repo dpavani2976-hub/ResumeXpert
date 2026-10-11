@@ -1,0 +1,660 @@
+{% extends "base.html" %}
+
+{% block title %}ResumeXpert Settings{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div>
+
+            <!-- LOGO -->
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h2>Resume<span>Xpert</span></h2>
+                    <p>AI Resume Analyzer</p>
+                </div>
+
+            </div>
+
+
+            <!-- MENU -->
+
+            <ul class="menu">
+
+               
+<li>
+    <a href="{{ url_for('dashboard') }}"
+       style="display:flex;align-items:center;gap:16px;width:100%;">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('reports') }}"
+       style="display:flex;align-items:center;gap:16px;width:100%;">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Reports</span>
+    </a>
+</li>
+
+        
+     
+
+
+                <!-- ACTIVE SETTINGS -->
+
+                <li class="active">
+
+                    <a href="{{ url_for('settings') }}"
+                       style="display:flex;align-items:center;gap:16px;width:100%;">
+
+                        <i class="fa-solid fa-gear"></i>
+
+                        <span>Settings</span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="header-left">
+
+                <h1>Settings</h1>
+
+                <p>
+                    Manage your ResumeXpert account and preferences
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="header-right">
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+                        {{ user.full_name[0]|upper }}
+                    </div>
+
+                    <div class="profile-info">
+
+                        <h4>
+                            {{ user.full_name }}
+                        </h4>
+
+                        <span>
+                            {{ user.email }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SETTINGS CONTENT ================= -->
+
+        <div style="
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:25px;
+            margin-bottom:30px;
+        ">
+
+
+            <!-- ================= ACCOUNT ================= -->
+
+            <div class="panel">
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:15px;
+                    margin-bottom:25px;
+                ">
+
+                    <div style="
+                        width:50px;
+                        height:50px;
+                        border-radius:15px;
+                        background:#2563EB;
+                        color:white;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:20px;
+                    ">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Account Information</h2>
+
+                        <p style="
+                            color:#64748B;
+                            font-size:14px;
+                            margin-top:4px;
+                        ">
+                            Your registered account details
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div style="margin-bottom:20px;">
+
+                    <label style="
+                        display:block;
+                        font-weight:600;
+                        margin-bottom:8px;
+                    ">
+                        Full Name
+                    </label>
+
+                    <div style="
+                        background:#F8FAFC;
+                        border:1px solid #E2E8F0;
+                        border-radius:12px;
+                        padding:14px 16px;
+                        color:#1F2937;
+                    ">
+
+                        <i class="fa-solid fa-user"
+                           style="margin-right:10px;color:#2563EB;">
+                        </i>
+
+                        {{ user.full_name }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:600;
+                        margin-bottom:8px;
+                    ">
+                        Email Address
+                    </label>
+
+                    <div style="
+                        background:#F8FAFC;
+                        border:1px solid #E2E8F0;
+                        border-radius:12px;
+                        padding:14px 16px;
+                        color:#1F2937;
+                    ">
+
+                        <i class="fa-solid fa-envelope"
+                           style="margin-right:10px;color:#2563EB;">
+                        </i>
+
+                        {{ user.email }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= SECURITY ================= -->
+
+            <div class="panel">
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:15px;
+                    margin-bottom:25px;
+                ">
+
+                    <div style="
+                        width:50px;
+                        height:50px;
+                        border-radius:15px;
+                        background:#7C3AED;
+                        color:white;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:20px;
+                    ">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Security</h2>
+
+                        <p style="
+                            color:#64748B;
+                            font-size:14px;
+                            margin-top:4px;
+                        ">
+                            Protect your ResumeXpert account
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div style="
+                    padding:18px;
+                    border:1px solid #E2E8F0;
+                    border-radius:14px;
+                    margin-bottom:18px;
+                ">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:12px;
+                    ">
+
+                        <i class="fa-solid fa-lock"
+                           style="
+                               color:#7C3AED;
+                               font-size:20px;
+                           ">
+                        </i>
+
+                        <div>
+
+                            <h4>Change Password</h4>
+
+                            <p style="
+                                color:#64748B;
+                                font-size:13px;
+                                margin-top:4px;
+                            ">
+                                Update your account password regularly.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD FORM -->
+
+                    <form method="POST"
+                          action="{{ url_for('change_password') }}"
+                          style="margin-top:18px;">
+
+                        <!-- CURRENT PASSWORD -->
+
+                        <div style="margin-bottom:14px;">
+
+                            <label style="
+                                display:block;
+                                font-weight:600;
+                                font-size:13px;
+                                margin-bottom:7px;
+                            ">
+                                Current Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="current_password"
+                                required
+                                style="
+                                    width:100%;
+                                    padding:11px 13px;
+                                    border:1px solid #E2E8F0;
+                                    border-radius:10px;
+                                    outline:none;
+                                    font-family:inherit;
+                                "
+                            >
+
+                        </div>
+
+
+                        <!-- NEW PASSWORD -->
+
+                        <div style="margin-bottom:14px;">
+
+                            <label style="
+                                display:block;
+                                font-weight:600;
+                                font-size:13px;
+                                margin-bottom:7px;
+                            ">
+                                New Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="new_password"
+                                required
+                                minlength="6"
+                                style="
+                                    width:100%;
+                                    padding:11px 13px;
+                                    border:1px solid #E2E8F0;
+                                    border-radius:10px;
+                                    outline:none;
+                                    font-family:inherit;
+                                "
+                            >
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div style="margin-bottom:15px;">
+
+                            <label style="
+                                display:block;
+                                font-weight:600;
+                                font-size:13px;
+                                margin-bottom:7px;
+                            ">
+                                Confirm New Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                required
+                                minlength="6"
+                                style="
+                                    width:100%;
+                                    padding:11px 13px;
+                                    border:1px solid #E2E8F0;
+                                    border-radius:10px;
+                                    outline:none;
+                                    font-family:inherit;
+                                "
+                            >
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+
+                        <button type="submit"
+                                style="
+                                    border:none;
+                                    background:#7C3AED;
+                                    color:white;
+                                    padding:10px 18px;
+                                    border-radius:10px;
+                                    font-weight:600;
+                                    cursor:pointer;
+                                ">
+
+                            Change Password
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- LOGIN SECURITY -->
+
+                <div style="
+                    padding:18px;
+                    border:1px solid #E2E8F0;
+                    border-radius:14px;
+                ">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:12px;
+                    ">
+
+                        <i class="fa-solid fa-circle-check"
+                           style="
+                               color:#22C55E;
+                               font-size:20px;
+                           ">
+                        </i>
+
+                        <div>
+
+                            <h4>Account Status</h4>
+
+                            <p style="
+                                color:#22C55E;
+                                font-size:13px;
+                                margin-top:4px;
+                                font-weight:600;
+                            ">
+                                Account Active
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= APPLICATION SETTINGS ================= -->
+
+        <div class="panel">
+
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:15px;
+                margin-bottom:25px;
+            ">
+
+                <div style="
+                    width:50px;
+                    height:50px;
+                    border-radius:15px;
+                    background:#F59E0B;
+                    color:white;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:20px;
+                ">
+
+                    <i class="fa-solid fa-sliders"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>Application Preferences</h2>
+
+                    <p style="
+                        color:#64748B;
+                        font-size:14px;
+                        margin-top:4px;
+                    ">
+                        Manage your ResumeXpert preferences
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYSIS PREFERENCE -->
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:18px 0;
+                border-bottom:1px solid #E2E8F0;
+            ">
+
+                <div>
+
+                    <h4>AI Resume Analysis</h4>
+
+                    <p style="
+                        color:#64748B;
+                        font-size:13px;
+                        margin-top:4px;
+                    ">
+                        Analyze your resume against job descriptions.
+                    </p>
+
+                </div>
+
+                <span style="
+                    background:#DCFCE7;
+                    color:#15803D;
+                    padding:7px 14px;
+                    border-radius:20px;
+                    font-size:13px;
+                    font-weight:600;
+                ">
+                    Enabled
+                </span>
+
+            </div>
+
+
+            <!-- SUPPORTED FILES -->
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:18px 0;
+            ">
+
+                <div>
+
+                    <h4>Supported Resume Formats</h4>
+
+                    <p style="
+                        color:#64748B;
+                        font-size:13px;
+                        margin-top:4px;
+                    ">
+                        ResumeXpert currently supports PDF, DOCX and TXT.
+                    </p>
+
+                </div>
+
+
+                <div style="
+                    display:flex;
+                    gap:8px;
+                ">
+
+                    <span style="
+                        background:#EFF6FF;
+                        color:#2563EB;
+                        padding:7px 12px;
+                        border-radius:8px;
+                        font-size:12px;
+                        font-weight:600;
+                    ">
+                        PDF
+                    </span>
+
+                    <span style="
+                        background:#EFF6FF;
+                        color:#2563EB;
+                        padding:7px 12px;
+                        border-radius:8px;
+                        font-size:12px;
+                        font-weight:600;
+                    ">
+                        DOCX
+                    </span>
+
+                    <span style="
+                        background:#EFF6FF;
+                        color:#2563EB;
+                        padding:7px 12px;
+                        border-radius:8px;
+                        font-size:12px;
+                        font-weight:600;
+                    ">
+                        TXT
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+{% endblock %}

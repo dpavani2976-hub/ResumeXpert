@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Details | ResumeXpert</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        /* =====================================
+           PAGE
+        ===================================== */
+
+        .report-details-page {
+
+            min-height: 100vh;
+
+            padding: 35px 45px;
+
+            background: var(--background);
+
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .details-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .details-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .details-title i {
+
+            font-size: 32px;
+
+            color: var(--primaryHover);
+
+        }
+
+
+        .details-title h1 {
+
+            font-size: 30px;
+
+            color: var(--text);
+
+        }
+
+
+        .details-title p {
+
+            margin-top: 5px;
+
+            color: var(--subText);
+
+        }
+
+
+        /* =====================================
+           BACK BUTTON
+        ===================================== */
+
+        .back-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            background: var(--primary);
+
+            color: white;
+
+            transition: .3s;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: var(--primaryHover);
+
+        }
+
+
+        /* =====================================
+           SCORE SECTION
+        ===================================== */
+
+        .score-section {
+
+            display: grid;
+
+            grid-template-columns: 1fr 2fr;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* SCORE CARD */
+
+        .score-card {
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+            text-align: center;
+
+        }
+
+
+        .score-card h2 {
+
+            color: var(--text);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .score-circle {
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                conic-gradient(
+                    #2563EB {{ report.ats_score }}%,
+                    #E5E7EB {{ report.ats_score }}%
+                );
+
+            position: relative;
+
+        }
+
+
+        .score-circle::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 135px;
+
+            height: 135px;
+
+            border-radius: 50%;
+
+            background: var(--card);
+
+        }
+
+
+        .score-value {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 40px;
+
+            font-weight: 700;
+
+            color: var(--primaryHover);
+
+        }
+
+
+        .score-label {
+
+            margin-top: 20px;
+
+            color: var(--subText);
+
+        }
+
+
+        /* =====================================
+           REPORT INFORMATION
+        ===================================== */
+
+        .info-card {
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .info-card h2 {
+
+            color: var(--text);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .info-item {
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background: rgba(37, 99, 235, .05);
+
+        }
+
+
+        .info-item i {
+
+            color: var(--primaryHover);
+
+            margin-right: 8px;
+
+        }
+
+
+        .info-item span {
+
+            color: var(--subText);
+
+            font-size: 14px;
+
+            display: block;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .info-item strong {
+
+            color: var(--text);
+
+            font-size: 15px;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =====================================
+           SKILLS SECTION
+        ===================================== */
+
+        .skills-section {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .skills-card {
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .skills-card h2 {
+
+            color: var(--text);
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .skill-list {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+        }
+
+
+        .skill-tag {
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            background: rgba(37, 99, 235, .1);
+
+            color: var(--primaryHover);
+
+            font-size: 14px;
+
+        }
+
+
+        .missing-tag {
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            background: rgba(239, 68, 68, .1);
+
+            color: #DC2626;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================
+           SUMMARY
+        ===================================== */
+
+        .summary-card {
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .summary-card h2 {
+
+            color: var(--text);
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .summary-box {
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background: rgba(37, 99, 235, .05);
+
+            text-align: center;
+
+        }
+
+
+        .summary-box i {
+
+            font-size: 25px;
+
+            color: var(--primaryHover);
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .summary-box h3 {
+
+            font-size: 28px;
+
+            color: var(--text);
+
+        }
+
+
+        .summary-box p {
+
+            color: var(--subText);
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .report-details-page {
+
+                padding: 25px;
+
+            }
+
+
+            .score-section {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .skills-section {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .details-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+
+            }
+
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="report-details-page">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="details-header">
+
+        <div class="details-title">
+
+            <i class="fa-solid fa-file-circle-check"></i>
+
+            <div>
+
+                <h1>Report Details</h1>
+
+                <p>
+                    Detailed resume analysis results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('reports') }}"
+           class="back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Reports
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =====================================
+         SCORE + INFORMATION
+    ====================================== -->
+
+    <div class="score-section">
+
+
+        <!-- ATS SCORE -->
+
+        <div class="score-card">
+
+            <h2>ATS Score</h2>
+
+
+            <div class="score-circle">
+
+                <div class="score-value">
+
+                    {{ report.ats_score }}%
+
+                </div>
+
+            </div>
+
+
+            <p class="score-label">
+
+                Resume compatibility score
+
+            </p>
+
+        </div>
+
+
+
+        <!-- REPORT INFORMATION -->
+
+        <div class="info-card">
+
+            <h2>Analysis Information</h2>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-item">
+
+                    <span>
+                        <i class="fa-solid fa-file"></i>
+                        Resume
+                    </span>
+
+                    <strong>
+                        {{ report.resume_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        <i class="fa-solid fa-briefcase"></i>
+                        Job Description
+                    </span>
+
+                    <strong>
+                        {{ report.job_description_name or "Not provided" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        <i class="fa-solid fa-calendar"></i>
+                        Analysis Date
+                    </span>
+
+                    <strong>
+
+                        {% if report.analysis_date %}
+
+                            {{ report.analysis_date.strftime('%d %B %Y, %I:%M %p') }}
+
+                        {% else %}
+
+                            Not available
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Status
+                    </span>
+
+                    <strong>
+                        Analysis Completed
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         SKILLS SUMMARY
+    ====================================== -->
+
+    <div class="summary-card">
+
+        <h2>Skills Analysis</h2>
+
+
+        <div class="summary-grid">
+
+
+            <!-- MATCHED -->
+
+            <div class="summary-box">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h3>
+                    {{ report.matched_skills }}
+                </h3>
+
+                <p>
+                    Matched Skills
+                </p>
+
+            </div>
+
+
+            <!-- MISSING -->
+
+            <div class="summary-box">
+
+                <i class="fa-solid fa-circle-xmark"></i>
+
+                <h3>
+                    {{ report.missing_skills }}
+                </h3>
+
+                <p>
+                    Missing Skills
+                </p>
+
+            </div>
+
+
+            <!-- ATS -->
+
+            <div class="summary-box">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                <h3>
+                    {{ report.ats_score }}%
+                </h3>
+
+                <p>
+                    ATS Score
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         NOTE
+    ====================================== -->
+
+    <div class="summary-card">
+
+        <h2>
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+            Analysis Summary
+
+        </h2>
+
+
+        <p style="
+            color:var(--subText);
+            line-height:1.8;
+        ">
+
+            This report was generated by ResumeXpert based on
+            the uploaded resume and job description. The ATS
+            score represents the percentage of recognized job
+            description skills that were found in the resume.
+
+        </p>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1946 @@
+/* =====================================================
+   ResumeXpert Dashboard
+   Modern SaaS Dashboard
+====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+
+    --primary:#2563EB;
+    --primary-light:#3B82F6;
+    --secondary:#7C3AED;
+
+    --success:#22C55E;
+    --warning:#F59E0B;
+    --danger:#EF4444;
+
+    --bg:#F5F7FB;
+    --card:#FFFFFF;
+
+    --text:#0F172A;
+    --text-light:#64748B;
+
+    --border:#E2E8F0;
+
+    --shadow:0 15px 35px rgba(15,23,42,.08);
+    --radius:22px;
+
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+}
+
+/* =====================================================
+   SIDEBAR
+====================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:270px;
+    height:100vh;
+
+    background:#0F172A;
+    color:#fff;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    padding:30px 22px;
+
+    z-index:1000;
+}
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    margin-bottom:45px;
+
+}
+
+.logo-icon{
+
+    width:58px;
+    height:58px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:24px;
+    color:white;
+}
+
+.logo h2{
+
+    font-size:28px;
+    font-weight:700;
+
+}
+
+.logo span{
+
+    color:#60A5FA;
+
+}
+
+.logo p{
+
+    color:#94A3B8;
+    font-size:13px;
+}
+
+.menu{
+
+    list-style:none;
+
+}
+
+.menu li{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    margin-bottom:10px;
+
+    transition:.3s;
+    cursor:pointer;
+}
+
+.menu li:hover{
+
+    background:#1E3A8A;
+}
+
+.menu li.active{
+
+    background:linear-gradient(90deg,#2563EB,#3B82F6);
+
+}
+
+.menu i{
+
+    width:22px;
+    text-align:center;
+    font-size:20px;
+
+}
+
+.menu span{
+
+    font-size:17px;
+    font-weight:500;
+
+}
+
+.logout-btn{
+
+    display:block;
+
+    text-align:center;
+
+    background:linear-gradient(90deg,#EF4444,#DC2626);
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.logout-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* =====================================================
+   MAIN
+====================================================== */
+
+.main{
+
+    flex:1;
+
+    margin-left:270px;
+
+    padding:35px;
+
+}
+/* =====================================================
+   HEADER
+====================================================== */
+
+.header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.header-left h1{
+
+    font-size:34px;
+    font-weight:700;
+    color:var(--text);
+
+}
+
+.header-left p{
+
+    margin-top:6px;
+    color:var(--text-light);
+    font-size:15px;
+
+}
+
+/* Right Section */
+
+.header-right{
+
+    display:flex;
+    align-items:center;
+    gap:22px;
+
+}
+
+/* =====================================================
+   Theme Button
+====================================================== */
+
+.theme-btn{
+
+    width:55px;
+    height:55px;
+
+    border:none;
+    outline:none;
+
+    cursor:pointer;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:var(--shadow);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+
+    transition:.35s;
+
+}
+
+.theme-btn:hover{
+
+    transform:rotate(180deg) scale(1.05);
+
+}
+
+/* =====================================================
+   Notifications
+====================================================== */
+
+.notification{
+
+    width:55px;
+    height:55px;
+
+    background:white;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:20px;
+
+    box-shadow:var(--shadow);
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:.3s;
+
+}
+
+.notification:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.notification::after{
+
+    content:"";
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#EF4444;
+
+    position:absolute;
+
+    top:14px;
+    right:15px;
+
+}
+
+/* =====================================================
+   Profile Card
+====================================================== */
+
+.profile-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:12px 22px;
+
+    display:flex;
+    align-items:center;
+
+    gap:18px;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+}
+
+.profile-card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.profile-avatar{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.profile-info{
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.profile-info h4{
+
+    font-size:18px;
+    font-weight:600;
+    color:var(--text);
+
+}
+
+.profile-info span{
+
+    color:var(--text-light);
+    font-size:14px;
+
+}
+
+.profile-arrow{
+
+    margin-left:10px;
+
+    font-size:18px;
+
+    color:#94A3B8;
+
+}
+
+/* =====================================================
+   Welcome Banner
+====================================================== */
+
+.welcome-banner{
+
+    margin-bottom:30px;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    color:white;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.welcome-banner::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    right:-80px;
+    top:-80px;
+
+}
+
+.welcome-banner h2{
+
+    font-size:32px;
+    margin-bottom:8px;
+
+}
+
+.welcome-banner p{
+
+    opacity:.9;
+    line-height:28px;
+
+}
+
+.welcome-banner button{
+
+    padding:15px 28px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:white;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.welcome-banner button:hover{
+
+    transform:translateY(-3px);
+
+}
+/* =====================================================
+   UPLOAD SECTION
+====================================================== */
+
+.upload-section{
+
+    margin-top:30px;
+    margin-bottom:35px;
+
+}
+
+.upload-form{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+
+.upload-card{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.upload-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.05);
+
+    top:-80px;
+    right:-80px;
+
+}
+
+.upload-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.upload-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:25px;
+
+}
+
+.upload-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:28px;
+
+    background:linear-gradient(135deg,#2563EB,#3B82F6);
+
+}
+
+.upload-icon.green{
+
+    background:linear-gradient(135deg,#22C55E,#16A34A);
+
+}
+
+.upload-card h2{
+
+    font-size:24px;
+
+    margin-bottom:6px;
+
+}
+
+.upload-card p{
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+}
+
+/* =====================================================
+   DROP ZONE
+====================================================== */
+
+.drop-zone{
+
+    margin-top:10px;
+
+    border:2px dashed #CBD5E1;
+
+    border-radius:20px;
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    background:#FAFBFF;
+
+}
+
+.drop-zone:hover{
+
+    border-color:var(--primary);
+
+    background:#EEF5FF;
+
+}
+
+.drop-zone i{
+
+    font-size:48px;
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+.drop-zone h3{
+
+    font-size:20px;
+
+    margin-bottom:8px;
+
+}
+
+.drop-zone span{
+
+    color:var(--text-light);
+
+    font-size:14px;
+
+}
+
+.file-name{
+
+    margin-top:18px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:var(--primary);
+
+    word-break:break-word;
+
+}
+
+/* Hide actual input */
+
+input[type=file]{
+
+    display:none;
+
+}
+
+/* =====================================================
+   Compare Button
+====================================================== */
+
+.compare-box{
+
+    grid-column:1/-1;
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-top:15px;
+
+}
+
+.compare-btn{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    padding:18px 70px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+
+    transition:.35s;
+
+    box-shadow:0 15px 35px rgba(37,99,235,.30);
+
+}
+
+.compare-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.40);
+
+}
+/* =====================================================
+   ANALYTICS CARDS
+====================================================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin:35px 0;
+
+}
+
+.card{
+
+    background:var(--card);
+
+    border-radius:22px;
+
+    padding:28px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:linear-gradient(90deg,#2563EB,#7C3AED);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.10);
+
+}
+
+.card-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:28px;
+
+    flex-shrink:0;
+
+}
+
+/* Icon Colors */
+
+.card-icon.blue{
+
+    background:linear-gradient(135deg,#2563EB,#3B82F6);
+
+}
+
+.card-icon.green{
+
+    background:linear-gradient(135deg,#22C55E,#16A34A);
+
+}
+
+.card-icon.orange{
+
+    background:linear-gradient(135deg,#F59E0B,#D97706);
+
+}
+
+.card-icon.red{
+
+    background:linear-gradient(135deg,#EF4444,#DC2626);
+
+}
+
+.card-content{
+
+    flex:1;
+
+}
+
+.card-content h4{
+
+    font-size:15px;
+
+    font-weight:500;
+
+    color:var(--text-light);
+
+    margin-bottom:10px;
+
+}
+
+.card-content h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    margin-bottom:6px;
+
+}
+
+.card-content p{
+
+    font-size:14px;
+
+    color:#94A3B8;
+
+}
+
+.card-content small{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.success{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.warning{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.danger{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+.primary{
+
+    background:#DBEAFE;
+
+    color:#1D4ED8;
+
+}
+/*=====================================================
+      DASHBOARD GRID
+=====================================================*/
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:1.3fr 1fr 1fr;
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+/*==================================
+      COMMON PANEL
+==================================*/
+
+.panel{
+
+    background:var(--card);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+}
+
+.panel:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.panel h2{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+
+    color:var(--text);
+
+}
+
+.panel-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.panel-title a{
+
+    color:var(--primary);
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/*==================================
+      Resume Overview
+==================================*/
+
+.resume-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.resume-table tr{
+
+    transition:.3s;
+
+}
+
+.resume-table tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+.resume-table td{
+
+    padding:18px 10px;
+
+    border-bottom:1px solid #EDF2F7;
+
+}
+
+.resume-table td:first-child{
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+.resume-table td:last-child{
+
+    text-align:right;
+
+    color:var(--text-light);
+
+    font-weight:500;
+
+}
+
+.resume-table tr:last-child td{
+
+    border:none;
+
+}
+
+/*==================================
+      Skills
+==================================*/
+
+.skill{
+
+    margin-bottom:24px;
+
+}
+
+.skill:last-child{
+
+    margin-bottom:0;
+
+}
+
+.skill-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+
+}
+
+.skill-title span{
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.skill-percent{
+
+    color:var(--primary);
+
+}
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#E5E7EB;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress-bar{
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:linear-gradient(90deg,#2563EB,#7C3AED);
+
+    width:0;
+
+    transition:width 1.5s ease;
+
+}
+
+/*==================================
+      ATS Chart
+==================================*/
+
+.chart-box{
+
+    width:100%;
+
+    height:320px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.chart-box canvas{
+
+    width:100% !important;
+
+    height:300px !important;
+
+}
+
+/*==================================
+      ATS Score Circle
+==================================*/
+
+.score-circle{
+
+    width:170px;
+
+    height:170px;
+
+    border-radius:50%;
+
+    background:conic-gradient(
+        #2563EB 0deg,
+        #7C3AED 260deg,
+        #E5E7EB 260deg
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    position:relative;
+
+}
+
+.score-circle::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+
+    height:130px;
+
+    background:white;
+
+    border-radius:50%;
+
+}
+
+.score-value{
+
+    position:relative;
+
+    z-index:5;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+}
+
+.score-label{
+
+    text-align:center;
+
+    margin-top:18px;
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+}
+
+/*==================================
+      Quick Stats
+==================================*/
+
+.quick-stats{
+
+    margin-top:30px;
+
+}
+
+.quick-stat{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #EDF2F7;
+
+}
+
+.quick-stat:last-child{
+
+    border:none;
+
+}
+
+.quick-stat h5{
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.quick-stat span{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+/*=====================================================
+        AI SUGGESTIONS
+=====================================================*/
+
+.ai-section{
+
+    margin-top:35px;
+    margin-bottom:35px;
+
+}
+
+.ai-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.ai-title h2{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:var(--text);
+
+}
+
+.ai-title span{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+.suggestion-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:22px;
+
+}
+
+.suggestion{
+
+    background:var(--card);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.suggestion::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.05);
+
+    right:-25px;
+    top:-25px;
+
+}
+
+.suggestion:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.suggestion i{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+    color:white;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    margin-bottom:18px;
+
+}
+
+.suggestion h4{
+
+    margin-bottom:12px;
+
+    font-size:18px;
+
+}
+
+.suggestion p{
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+    font-size:14px;
+
+}
+
+/*=====================================================
+        ANALYSIS RESULT
+=====================================================*/
+
+.analysis-results{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:25px;
+
+}
+
+.analysis-results .card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.analysis-results h3{
+
+    font-size:20px;
+
+    margin-bottom:20px;
+
+}
+
+.analysis-results h1{
+
+    font-size:48px;
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+.analysis-results ul{
+
+    padding-left:20px;
+
+}
+
+.analysis-results li{
+
+    margin-bottom:12px;
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+
+/*=====================================================
+      SCORE COLORS
+=====================================================*/
+
+.score-good{
+
+    color:#16A34A;
+
+}
+
+.score-average{
+
+    color:#F59E0B;
+
+}
+
+.score-poor{
+
+    color:#DC2626;
+
+}
+
+/*=====================================================
+        DOWNLOAD REPORT
+=====================================================*/
+
+.download-section{
+
+    margin-top:45px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.download-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:18px 45px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    box-shadow:0 15px 35px rgba(37,99,235,.30);
+
+    transition:.35s;
+
+}
+
+.download-btn:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 22px 45px rgba(37,99,235,.40);
+
+}
+
+.download-btn i{
+
+    font-size:22px;
+
+}
+
+/*=====================================================
+        STATUS BADGES
+=====================================================*/
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.badge-success{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.badge-warning{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.badge-danger{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+/*=====================================================
+      SMALL ANIMATIONS
+=====================================================*/
+
+.fade-up{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+/*=====================================================
+        DARK MODE
+=====================================================*/
+
+body.dark{
+
+    --bg:#0F172A;
+    --card:#1E293B;
+
+    --text:#F8FAFC;
+    --text-light:#CBD5E1;
+
+    --border:#334155;
+
+}
+
+body.dark .main{
+
+    background:var(--bg);
+
+}
+
+body.dark .panel,
+body.dark .card,
+body.dark .upload-card,
+body.dark .profile-card,
+body.dark .suggestion,
+body.dark .theme-btn,
+body.dark .notification{
+
+    background:var(--card);
+    color:var(--text);
+
+}
+
+body.dark .resume-table tr:hover{
+
+    background:#273449;
+
+}
+
+body.dark .resume-table td{
+
+    border-color:#334155;
+
+}
+
+body.dark .progress{
+
+    background:#334155;
+
+}
+
+body.dark .drop-zone{
+
+    background:#162033;
+    border-color:#475569;
+
+}
+
+body.dark .drop-zone:hover{
+
+    background:#1E293B;
+    border-color:#3B82F6;
+
+}
+
+body.dark .upload-button{
+
+    background:#334155;
+    color:white;
+
+}
+
+body.dark .compare-btn{
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+}
+
+body.dark .download-btn{
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+}
+
+body.dark .score-circle::before{
+
+    background:#1E293B;
+
+}
+
+/*=====================================================
+        SCROLLBAR
+=====================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#E2E8F0;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563EB;
+    border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1D4ED8;
+
+}
+
+/*=====================================================
+        ANIMATIONS
+=====================================================*/
+
+.card,
+.panel,
+.upload-card,
+.suggestion{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+.upload-icon{
+
+    animation:float 3s infinite;
+
+}
+
+/*=====================================================
+        RESPONSIVE
+=====================================================*/
+
+@media(max-width:1400px){
+
+    .cards{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .suggestion-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:1100px){
+
+    .upload-form{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .compare-box{
+
+        grid-column:auto;
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+
+        display:none;
+
+    }
+
+    .main{
+
+        margin-left:0;
+        padding:20px;
+
+    }
+
+    .header{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+
+    }
+
+    .header-right{
+
+        width:100%;
+        justify-content:space-between;
+
+    }
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .suggestion-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .header-left h1{
+
+        font-size:28px;
+
+    }
+
+    .profile-card{
+
+        width:100%;
+
+    }
+
+    .compare-btn{
+
+        width:100%;
+
+        font-size:18px;
+
+    }
+
+    .download-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .panel{
+
+        padding:20px;
+
+    }
+
+}

@@ -1,0 +1,1076 @@
+{% extends "base.html" %}
+
+{% block title %}ResumeXpert Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div>
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h2>Resume<span>Xpert</span></h2>
+                    <p>AI Resume Analyzer</p>
+                </div>
+
+            </div>
+
+
+            <ul class="menu">
+
+            
+<li class="active">
+    <a href="{{ url_for('dashboard') }}"
+       style="display:flex;align-items:center;gap:16px;width:100%;">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('reports') }}"
+       style="display:flex;align-items:center;gap:16px;width:100%;">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Reports</span>
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('settings') }}"
+       style="display:flex;align-items:center;gap:16px;width:100%;">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+    </a>
+</li>
+
+
+            </ul>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-btn"
+        >
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="header">
+
+            <div class="header-left">
+
+                <h1>
+                    Resume Analyzer Dashboard
+                </h1>
+
+                <p>
+                    Compare Resume with Job Description using AI
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+               
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+
+                        {{ user.full_name[0]|upper }}
+
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <h4>
+                            {{ user.full_name }}
+                        </h4>
+
+                        <span>
+                            {{ user.email }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= WELCOME BANNER ================= -->
+
+        <div class="welcome-banner">
+
+            <div>
+
+                <h2>
+                    Welcome, {{ user.full_name }}!
+                </h2>
+
+                <p>
+                    Upload your resume and job description
+                    to check your ATS compatibility.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= UPLOAD SECTION ================= -->
+
+        <div class="upload-section">
+
+            <form
+                action="{{ url_for('dashboard') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="upload-form"
+            >
+
+
+                <!-- RESUME -->
+
+                <div class="upload-card">
+
+                    <div class="upload-top">
+
+                        <div class="upload-icon">
+
+                            <i class="fa-solid fa-file-arrow-up"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Resume
+                            </h2>
+
+                            <p>
+                                PDF / DOCX / TXT
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label
+                        class="drop-zone"
+                        for="resume"
+                    >
+
+                        <input
+                            type="file"
+                            id="resume"
+                            name="resume"
+                            accept=".pdf,.docx,.txt"
+                            hidden
+                        >
+
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+
+                        <h3>
+                            Drag & Drop Resume
+                        </h3>
+
+
+                        <span>
+                            Click to browse
+                        </span>
+
+                    </label>
+
+
+                    <div
+                        id="resumeName"
+                        class="file-name"
+                    >
+                        No Resume Selected
+                    </div>
+
+                </div>
+
+
+
+                <!-- JOB DESCRIPTION -->
+
+                <div class="upload-card">
+
+                    <div class="upload-top">
+
+                        <div class="upload-icon green">
+
+                            <i class="fa-solid fa-briefcase"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Job Description
+                            </h2>
+
+                            <p>
+                                PDF / DOCX / TXT
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label
+                        class="drop-zone"
+                        for="job_description"
+                    >
+
+                        <input
+                            type="file"
+                            id="job_description"
+                            name="job_description"
+                            accept=".pdf,.docx,.txt"
+                            hidden
+                        >
+
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+
+                        <h3>
+                            Drag & Drop Job Description
+                        </h3>
+
+
+                        <span>
+                            Click to browse
+                        </span>
+
+                    </label>
+
+
+                    <div
+                        id="jdName"
+                        class="file-name"
+                    >
+                        No Job Description Selected
+                    </div>
+
+                </div>
+
+
+
+                <!-- COMPARE BUTTON -->
+
+                <div class="compare-box">
+
+                    <button
+                        type="submit"
+                        class="compare-btn"
+                    >
+
+                        <i class="fa-solid fa-scale-balanced"></i>
+
+                        Compare Resume
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================= ANALYTICS CARDS ================= -->
+
+        <div class="cards">
+
+
+            <!-- ATS SCORE -->
+
+            <div class="card">
+
+                <div class="card-icon blue">
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <h4>
+                        ATS Score
+                    </h4>
+
+                    <h2 class="counter">
+
+                        {% if result %}
+                            {{ result.score }}
+                        {% else %}
+                            0
+                        {% endif %}
+
+                        %
+
+                    </h2>
+
+                    <p>
+
+                        {% if result %}
+                            Analysis Complete
+                        {% else %}
+                            Waiting for Analysis
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MATCHED SKILLS -->
+
+            <div class="card">
+
+                <div class="card-icon green">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <h4>
+                        Skills Matched
+                    </h4>
+
+                    <h2 class="counter">
+
+                        {% if result %}
+                            {{ result.matched|length }}
+                        {% else %}
+                            0
+                        {% endif %}
+
+                    </h2>
+
+                    <p>
+                        Detected Skills
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MISSING SKILLS -->
+
+            <div class="card">
+
+                <div class="card-icon orange">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <h4>
+                        Missing Skills
+                    </h4>
+
+                    <h2 class="counter">
+
+                        {% if result %}
+                            {{ result.missing|length }}
+                        {% else %}
+                            0
+                        {% endif %}
+
+                    </h2>
+
+                    <p>
+                        Need Improvement
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RESUME STATUS -->
+
+            <div class="card">
+
+                <div class="card-icon red">
+
+                    <i class="fa-solid fa-file-circle-check"></i>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <h4>
+                        Resume Status
+                    </h4>
+
+                    <h2>
+
+                        {% if result %}
+                            Uploaded
+                        {% else %}
+                            Not Uploaded
+                        {% endif %}
+
+                    </h2>
+
+                    <p>
+
+                        {% if result %}
+                            Analysis Complete
+                        {% else %}
+                            Upload Required
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= AI SUGGESTIONS ================= -->
+
+        {% if result %}
+
+        <section class="ai-section">
+            <div class="ai-title">
+                <h2>AI Resume Suggestions</h2>
+                <span>
+                    <i class="fa-solid fa-robot"></i>
+                    AI Powered
+                </span>
+            </div>
+
+            <div class="suggestion-grid">
+
+                <div class="suggestion suggestion-blue">
+                    <div class="suggestion-icon blue">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h4>Key Recommendations</h4>
+                    <ul>
+                        {% for suggestion in result.suggestions[:3] %}
+                        <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="suggestion suggestion-purple">
+                    <div class="suggestion-icon purple">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h4>Missing Skills to Add</h4>
+                    <p>
+                        {% if result.missing %}
+                            {{ result.missing | join(', ') }}
+                        {% else %}
+                            No missing skills found.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="suggestion suggestion-green">
+                    <div class="suggestion-icon green">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4>Additional Improvements</h4>
+                    <ul>
+                        <li>Include relevant certifications.</li>
+                        <li>Improve the summary section.</li>
+                        <li>Showcase communication and teamwork skills.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        {% endif %}
+
+
+        <!-- ================= DASHBOARD GRID ================= -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- RESUME OVERVIEW -->
+
+            <div class="panel">
+
+                <h2>
+                    Resume Overview
+                </h2>
+
+
+                <table class="resume-table">
+
+                    <tr>
+
+                        <td>
+                            Name
+                        </td>
+
+                        <td>
+
+                            {% if result %}
+                                {{ result.resume_details.name }}
+                            {% else %}
+                                --
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Email
+                        </td>
+
+                        <td>
+
+                            {% if result %}
+                                {{ result.resume_details.email }}
+                            {% else %}
+                                --
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Phone
+                        </td>
+
+                        <td>
+
+                            {% if result %}
+                                {{ result.resume_details.phone }}
+                            {% else %}
+                                --
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Education
+                        </td>
+
+                        <td>
+
+                            {% if result %}
+                                {{ result.resume_details.education }}
+                            {% else %}
+                                --
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Experience
+                        </td>
+
+                        <td>
+                            Coming Soon
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Projects
+                        </td>
+
+                        <td>
+                            Coming Soon
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- TOP SKILLS -->
+
+            <div class="panel">
+
+                <h2>
+                    Top Skills
+                </h2>
+
+
+                {% set resume_skills = [] %}
+
+                {% if result %}
+                    {% set resume_skills = result.resume_skills %}
+                {% endif %}
+
+
+                <!-- PYTHON -->
+
+                <div class="skill">
+
+                    <div class="skill-title">
+
+                        <span>
+                            Python
+                        </span>
+
+                        <span class="skill-percent">
+
+                            {% if result and "python" in result.resume_skills %}
+                                100%
+                            {% else %}
+                                0%
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            data-width="{% if result and 'python' in result.resume_skills %}100%{% else %}0%{% endif %}"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- JAVA -->
+
+                <div class="skill">
+
+                    <div class="skill-title">
+
+                        <span>
+                            Java
+                        </span>
+
+                        <span class="skill-percent">
+
+                            {% if result and "java" in result.resume_skills %}
+                                100%
+                            {% else %}
+                                0%
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            data-width="{% if result and 'java' in result.resume_skills %}100%{% else %}0%{% endif %}"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SQL -->
+
+                <div class="skill">
+
+                    <div class="skill-title">
+
+                        <span>
+                            SQL
+                        </span>
+
+                        <span class="skill-percent">
+
+                            {% if result and "sql" in result.resume_skills %}
+                                100%
+                            {% else %}
+                                0%
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            data-width="{% if result and 'sql' in result.resume_skills %}100%{% else %}0%{% endif %}"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MACHINE LEARNING -->
+
+                <div class="skill">
+
+                    <div class="skill-title">
+
+                        <span>
+                            Machine Learning
+                        </span>
+
+                        <span class="skill-percent">
+
+                            {% if result and "machine learning" in result.resume_skills %}
+                                100%
+                            {% else %}
+                                0%
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            data-width="{% if result and 'machine learning' in result.resume_skills %}100%{% else %}0%{% endif %}"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ATS CHART -->
+
+            <div class="panel">
+
+                <h2>
+                    ATS Trend
+                </h2>
+
+
+                <div class="chart-box" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;min-height:320px;">
+
+                    <div
+                        style="
+                            --score:{% if result %}{{ result.score }}{% else %}0{% endif %};
+                            width:220px;
+                            height:220px;
+                            border-radius:50%;
+                            background:conic-gradient(#2563EB calc(var(--score) * 1%), #E5E7EB 0);
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            position:relative;
+                        "
+                    >
+                        <div
+                            style="
+                                width:155px;
+                                height:155px;
+                                border-radius:50%;
+                                background:var(--card);
+                                display:flex;
+                                flex-direction:column;
+                                align-items:center;
+                                justify-content:center;
+                                box-shadow:inset 0 0 0 1px rgba(148,163,184,.12);
+                            "
+                        >
+                            <strong style="font-size:38px;color:var(--primary);line-height:1;">{% if result %}{{ result.score }}{% else %}0{% endif %}%</strong>
+                            <span style="margin-top:8px;font-size:14px;color:var(--subText);font-weight:600;">ATS Score</span>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;align-items:center;gap:18px;font-size:13px;font-weight:600;color:var(--subText);">
+                        <span style="display:flex;align-items:center;gap:7px;">
+                            <span style="width:10px;height:10px;border-radius:50%;background:#2563EB;display:inline-block;"></span>
+                            Score
+                        </span>
+                        <span style="display:flex;align-items:center;gap:7px;">
+                            <span style="width:10px;height:10px;border-radius:50%;background:#E5E7EB;display:inline-block;"></span>
+                            Remaining
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= ANALYSIS RESULTS ================= -->
+
+        {% if result %}
+
+        <div class="analysis-results">
+
+
+            <!-- ATS SCORE -->
+
+            <div class="card">
+
+                <h3>
+                    ATS Score
+                </h3>
+
+                <h1 class="
+                    {% if result.score >= 80 %}
+                        score-good
+                    {% elif result.score >= 60 %}
+                        score-average
+                    {% else %}
+                        score-poor
+                    {% endif %}
+                ">
+
+                    {{ result.score }}%
+
+                </h1>
+
+            </div>
+
+
+
+            <!-- MATCHED -->
+
+            <div class="card">
+
+                <h3>
+                    Matched Skills
+                </h3>
+
+                <ul>
+
+                    {% if result.matched %}
+
+                        {% for skill in result.matched %}
+
+                            <li>
+                                {{ skill }}
+                            </li>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <li>
+                            No matched skills found.
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- MISSING -->
+
+            <div class="card">
+
+                <h3>
+                    Missing Skills
+                </h3>
+
+                <ul>
+
+                    {% if result.missing %}
+
+                        {% for skill in result.missing %}
+
+                            <li>
+                                {{ skill }}
+                            </li>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <li>
+                            No missing skills.
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- RESUME SKILLS -->
+
+            <div class="card">
+
+                <h3>
+                    Resume Skills
+                </h3>
+
+                <ul>
+
+                    {% if result.resume_skills %}
+
+                        {% for skill in result.resume_skills %}
+
+                            <li>
+                                {{ skill }}
+                            </li>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <li>
+                            No skills detected.
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- JOB DESCRIPTION SKILLS -->
+
+            <div class="card">
+
+                <h3>
+                    Job Description Skills
+                </h3>
+
+                <ul>
+
+                    {% if result.jd_skills %}
+
+                        {% for skill in result.jd_skills %}
+
+                            <li>
+                                {{ skill }}
+                            </li>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <li>
+                            No skills detected.
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+        {% endif %}
+
+
+
+        
+
+    </main>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | ResumeXpert</title>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <style>
+
+        /* =========================================
+           REPORTS PAGE
+        ========================================= */
+
+        .reports-page {
+
+            min-height: 100vh;
+
+            padding: 35px 45px;
+
+            background: var(--background);
+
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .reports-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .reports-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .reports-title i {
+
+            font-size: 32px;
+
+            color: var(--primaryHover);
+
+        }
+
+
+        .reports-title h1 {
+
+            font-size: 30px;
+
+            color: var(--text);
+
+        }
+
+
+        .reports-title p {
+
+            margin-top: 5px;
+
+            color: var(--subText);
+
+        }
+
+
+        /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+        .back-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            background: var(--primary);
+
+            color: white;
+
+            transition: .3s;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: var(--primaryHover);
+
+        }
+
+
+        /* =========================================
+           SUMMARY CARDS
+        ========================================= */
+
+        .report-summary {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .summary-card {
+
+            background: var(--card);
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: .3s;
+
+        }
+
+
+        .summary-card:hover {
+
+            transform: translateY(-4px);
+
+        }
+
+
+        .summary-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(37, 99, 235, .1);
+
+            color: var(--primaryHover);
+
+            font-size: 20px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .summary-card h3 {
+
+            font-size: 25px;
+
+            color: var(--text);
+
+        }
+
+
+        .summary-card p {
+
+            color: var(--subText);
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =========================================
+           REPORTS CARD
+        ========================================= */
+
+        .reports-card {
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .reports-card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .reports-card-header h2 {
+
+            color: var(--text);
+
+            font-size: 22px;
+
+        }
+
+
+        .reports-card-header p {
+
+            color: var(--subText);
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =========================================
+           TABLE
+        ========================================= */
+
+        .report-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .report-table th {
+
+            text-align: left;
+
+            padding: 15px;
+
+            color: var(--subText);
+
+            font-size: 14px;
+
+            border-bottom: 1px solid #E5E7EB;
+
+        }
+
+
+        .report-table td {
+
+            padding: 18px 15px;
+
+            color: var(--text);
+
+            border-bottom: 1px solid #E5E7EB;
+
+        }
+
+
+        .report-table tbody tr {
+
+            transition: .2s;
+
+        }
+
+
+        .report-table tbody tr:hover {
+
+            background: rgba(37, 99, 235, .04);
+
+        }
+
+
+        /* =========================================
+           RESUME NAME
+        ========================================= */
+
+        .report-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-weight: 500;
+
+        }
+
+
+        .report-name i {
+
+            color: #DC2626;
+
+            font-size: 22px;
+
+        }
+
+
+        /* =========================================
+           ATS SCORE
+        ========================================= */
+
+        .score {
+
+            font-weight: 700;
+
+            color: var(--primaryHover);
+
+        }
+
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            background: rgba(34, 197, 94, .1);
+
+            color: #16A34A;
+
+        }
+        .view-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 13px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    background: rgba(37, 99, 235, .1);
+
+    color: var(--primaryHover);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+
+.view-btn:hover {
+
+    background: var(--primaryHover);
+
+    color: white;
+
+}
+
+        /* =========================================
+           EMPTY REPORT
+        ========================================= */
+
+        .empty-report {
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+        }
+
+
+        .empty-report i {
+
+            font-size: 55px;
+
+            color: var(--primaryHover);
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .empty-report h3 {
+
+            color: var(--text);
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .empty-report p {
+
+            color: var(--subText);
+
+            max-width: 500px;
+
+            margin: auto;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            .report-summary {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .reports-page {
+
+                padding: 25px;
+
+            }
+
+            .reports-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+
+            }
+
+            .reports-card {
+
+                overflow-x: auto;
+
+            }
+
+            .report-table {
+
+                min-width: 900px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .report-summary {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="reports-page">
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="reports-header">
+
+        <div class="reports-title">
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+            <div>
+
+                <h1>Reports</h1>
+
+                <p>
+                    View your resume analysis reports and results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('dashboard') }}"
+           class="back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         SUMMARY CARDS
+    ========================================== -->
+
+    <div class="report-summary">
+
+
+        <!-- TOTAL REPORTS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+            </div>
+
+
+            <h3>
+
+                {{ reports|length }}
+
+            </h3>
+
+
+            <p>
+
+                Total Reports
+
+            </p>
+
+        </div>
+
+
+
+        <!-- LATEST ATS SCORE -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+
+            <h3>
+
+                {% if reports %}
+
+                    {{ reports[0].ats_score }}%
+
+                {% else %}
+
+                    --
+
+                {% endif %}
+
+            </h3>
+
+
+            <p>
+
+                Latest ATS Score
+
+            </p>
+
+        </div>
+
+
+
+        <!-- MATCHED SKILLS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+            </div>
+
+
+            <h3>
+
+                {% if reports %}
+
+                    {{ reports[0].matched_skills }}
+
+                {% else %}
+
+                    --
+
+                {% endif %}
+
+            </h3>
+
+
+            <p>
+
+                Matched Skills
+
+            </p>
+
+        </div>
+
+
+
+        <!-- LAST ANALYSIS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+
+                <i class="fa-solid fa-calendar"></i>
+
+            </div>
+
+
+            <h3>
+
+                {% if reports %}
+
+                    {{ reports[0].analysis_date.strftime('%d %b %Y') }}
+
+                {% else %}
+
+                    --
+
+                {% endif %}
+
+            </h3>
+
+
+            <p>
+
+                Last Analysis
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         ANALYSIS REPORTS
+    ========================================== -->
+
+    <div class="reports-card">
+
+
+        <div class="reports-card-header">
+
+            <div>
+
+                <h2>
+                    Analysis Reports
+                </h2>
+
+                <p>
+                    Your previous resume analysis results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             IF REPORTS EXIST
+        ====================================== -->
+
+        {% if reports %}
+
+
+        <table class="report-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Resume
+                    </th>
+
+                    <th>
+                        Job Description
+                    </th>
+
+                    <th>
+                        ATS Score
+                    </th>
+
+                    <th>
+                        Matched
+                    </th>
+
+                    <th>
+                        Missing
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+
+            <tbody>
+
+
+                {% for report in reports %}
+
+
+                <tr>
+
+
+                    <!-- RESUME -->
+
+                    <td>
+
+                        <div class="report-name">
+
+                            <i class="fa-solid fa-file-pdf"></i>
+
+                            <span>
+
+                                {{ report.resume_name }}
+
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+
+                    <!-- JOB DESCRIPTION -->
+
+                    <td>
+
+                        {{ report.job_description_name or "Not provided" }}
+
+                    </td>
+
+
+
+                    <!-- ATS SCORE -->
+
+                    <td>
+
+                        <span class="score">
+
+                            {{ report.ats_score }}%
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- MATCHED -->
+
+                    <td>
+
+                        {{ report.matched_skills }}
+
+                    </td>
+
+
+
+                    <!-- MISSING -->
+
+                    <td>
+
+                        {{ report.missing_skills }}
+
+                    </td>
+
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        {% if report.analysis_date %}
+
+                            {{ report.analysis_date.strftime('%d %b %Y') }}
+
+                        {% else %}
+
+                            --
+
+                        {% endif %}
+
+                    </td>
+
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Completed
+
+                        </span>
+
+                    </td>
+                    <td>
+
+    <a href="{{ url_for('view_report', report_id=report.id) }}"
+       class="view-btn">
+
+        <i class="fa-solid fa-eye"></i>
+
+        View
+
+    </a>
+
+</td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+        <!-- =====================================
+             NO REPORTS
+        ====================================== -->
+
+        {% else %}
+
+
+        <div class="empty-report">
+
+            <i class="fa-solid fa-folder-open"></i>
+
+            <h3>
+                No Analysis Reports Yet
+            </h3>
+
+            <p>
+
+                Analyze your resume against a job description
+                from the Dashboard to generate your first report.
+
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
